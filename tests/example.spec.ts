@@ -4,7 +4,7 @@ test('Searching for exact book yields correct first result', async ({ page }) =>
   await page.goto('/');
   await page.getByPlaceholder('Search 19 million titles by title, author, or ISBN').fill('The Lord of the Rings: The Fellowship of the Ring by J.R.R. Tolkien');
   await page.locator('.Search-submit').click();
-  
+
   const firstResult = page.locator('.SearchContentResults-tilesContainer div.AllEditionsItem-tile').first();
 
   await expect(firstResult.locator('.AllEditionsItem-tileTitle')).toHaveText('The Lord of the Rings: The Fellowship of the Ring');
@@ -51,3 +51,16 @@ test('Expected number of items show on search page', async ({ page }) => {
   await page.locator('#Search-sortBar-perpage-description').selectOption('50');
   await expect(page.locator('.AllEditionsItem-tile.Recipe-default')).toHaveCount(50);
 });
+
+test('Remove item from cart', async ({ page }) => {
+  page.goto('/');
+  await page.locator('.BookSlideDesktop-Container').first().click();
+  await page.getByText('Add to cart').click();
+  await page.getByText('View Cart & Checkout').click();
+  await page.getByText('Remove').click();
+
+  await expect(page.locator('.ShoppingCart-titleArea')).toContainText('0 items');
+  await expect(page.locator('.ShoppingCart-Messages')).toContainText('Your shopping cart is currently empty.');
+  await expect(page.locator('.ShoppingCartItem')).toHaveCount(0);
+});
+
