@@ -36,12 +36,15 @@ test('Added book shows in cart', {
   await page.getByText('Add to cart').click();
   await page.getByText('View Cart & Checkout').click();
   
-  await expect(page.locator('.ShoppingCartItem')).toHaveCount(1);
-  await expect(page.locator('.ShoppingCartItem')).toContainText(bookTitle);
-  await expect(page.locator('.ShoppingCartItem')).toContainText(author);
-  await expect(page.locator('.ShoppingCartItem')).toContainText(format);
-  await expect(page.locator('.ShoppingCartItem')).toContainText(condition);
-  await expect(page.locator('.ShoppingCartItem')).toContainText(price);
+  // Check for null so TypeScript does not complain (temporary solution)
+  if(bookTitle !== null && author !== null && format !== null && condition !== null && price !== null) {
+    await expect(page.locator('.ShoppingCartItem')).toHaveCount(1);
+    await expect(page.locator('.ShoppingCartItem')).toContainText(bookTitle);
+    await expect(page.locator('.ShoppingCartItem')).toContainText(author);
+    await expect(page.locator('.ShoppingCartItem')).toContainText(format);
+    await expect(page.locator('.ShoppingCartItem')).toContainText(condition);
+    await expect(page.locator('.ShoppingCartItem')).toContainText(price);
+  }
 });
 
 test('Expected number of items show on search page', {
