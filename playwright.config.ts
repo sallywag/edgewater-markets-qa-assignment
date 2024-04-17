@@ -23,7 +23,7 @@ export default defineConfig({
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    baseURL: 'https://www.amazon.com/',
+    baseURL: 'https://www.thriftbooks.com/',
     trace: 'on-first-retry',
     headless: false,
     launchOptions: {
