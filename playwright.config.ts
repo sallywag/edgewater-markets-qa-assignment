@@ -9,7 +9,7 @@ export default defineConfig({
   reporter: 'html',
   use: {
     baseURL: 'https://www.thriftbooks.com/',
-    trace: 'on-first-retry',
+    trace: 'on',
     headless: false,
     launchOptions: {
       slowMo: 1000
