@@ -1,18 +1,10 @@
 import { test, expect } from '@playwright/test';
 
-test('has title', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
-
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Playwright/);
-});
-
-test('get started link', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
-
-  // Click the get started link.
-  await page.getByRole('link', { name: 'Get started' }).click();
-
-  // Expects page to have a heading with the name of Installation.
-  await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
-});
+test('Searching for exact book yields correct first result', async ({ page }) => {
+  await page.goto('/');
+  await page.locator('#GlobalSearch input').fill('The Lord of the Rings: The Fellowship of the Ring by J.R.R. Tolkien');
+  await page.locator('.Search-submit').click();
+  const firstResult = page.locator('.SearchContentResults-tilesContainer div.AllEditionsItem-tile').first();
+  await expect(firstResult.locator('.AllEditionsItem-tileTitle')).toHaveText('The Lord of the Rings: The Fellowship of the Ring');
+  await expect(firstResult.locator('[itemprop=author]')).toHaveText('J.R.R. sTolkien');
+})
