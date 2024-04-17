@@ -12,11 +12,22 @@ test('Searching for exact book yields correct first result', async ({ page }) =>
 test('Added book shows in cart', async ({ page }) => {
   await page.goto('/');
   await page.locator('.BookSlideDesktop-Container').first().click();
+
   const bookTitle = await page.locator('.WorkMeta-title').textContent();
+  const author = await page.locator('.WorkMeta-authors a').first().textContent();
+  const format = await page.locator('.NewButton.WorkSelector-button.is-selected .WorkSelector-bold').first().textContent();
+  const condition = await page.locator('.NewButton.WorkSelector-button.is-selected .WorkSelector-bold').nth(1).textContent();
+  const price = await page.locator('.NewButton.WorkSelector-button.is-selected .WorkSelector-bold.WorkSelector-red').textContent();
+
   await page.getByText('Add to cart').click();
   await page.getByText('View Cart & Checkout').click();
-  await expect(page.locator('.ShoppingCartItem-title')).toHaveText(bookTitle);
-  await expect(page.locator('.ShoppingCartItem-title')).toHaveCount(1);
+  
+  await expect(page.locator('.ShoppingCartItem')).toHaveCount(1);
+  await expect(page.locator('.ShoppingCartItem')).toContainText(bookTitle);
+  await expect(page.locator('.ShoppingCartItem')).toContainText(author);
+  await expect(page.locator('.ShoppingCartItem')).toContainText(format);
+  await expect(page.locator('.ShoppingCartItem')).toContainText(condition);
+  await expect(page.locator('.ShoppingCartItem')).toContainText(price);
 });
 
 test('Expected number of items show on search page', async ({ page }) => {
