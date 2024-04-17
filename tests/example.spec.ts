@@ -1,7 +1,15 @@
 import { test, expect } from '@playwright/test';
 
-test('Searching for exact book yields correct first result', async ({ page }) => {
+test.beforeEach(async ({ page }) => {
   await page.goto('/');
+});
+
+test('Searching for exact book yields correct first result', {
+  annotation: {
+    type: 'Summary',
+    description: 'Search for a book, verify it\'s title and author shows in the first results card.'
+  }
+}, async ({ page }) => {
   await page.getByPlaceholder('Search 19 million titles by title, author, or ISBN').fill('The Lord of the Rings: The Fellowship of the Ring by J.R.R. Tolkien');
   await page.locator('.Search-submit').click();
 
@@ -11,8 +19,12 @@ test('Searching for exact book yields correct first result', async ({ page }) =>
   await expect(firstResult.locator('[itemprop=author]')).toHaveText('J.R.R. Tolkien');
 });
 
-test('Added book shows in cart', async ({ page }) => {
-  await page.goto('/');
+test('Added book shows in cart', {
+  annotation: {
+    type: 'Summary',
+    description: 'Click first book on the home page, add it to cart, view cart, verify it shows in the cart.'
+  }
+}, async ({ page }) => {
   await page.locator('.BookSlideDesktop-Container').first().click();
 
   const bookTitle = await page.locator('.WorkMeta-title').textContent();
@@ -32,8 +44,12 @@ test('Added book shows in cart', async ({ page }) => {
   await expect(page.locator('.ShoppingCartItem')).toContainText(price);
 });
 
-test('Expected number of items show on search page', async ({ page }) => {
-  await page.goto('/');
+test('Expected number of items show on search page', {
+  annotation: {
+    type: 'Summary',
+    description: 'Search a category, change items per page, verify only selected items per page show.'
+  }
+}, async ({ page }) => {
   await page.getByPlaceholder('Search 19 million titles by title, author, or ISBN').fill('Health');
   await page.locator('.Search-submit').click();
 
@@ -52,8 +68,12 @@ test('Expected number of items show on search page', async ({ page }) => {
   await expect(page.locator('.AllEditionsItem-tile.Recipe-default')).toHaveCount(50);
 });
 
-test('Remove item from cart', async ({ page }) => {
-  page.goto('/');
+test('Remove item from cart', {
+  annotation: {
+    type: 'Summary',
+    description: 'Click first book on the home page, add it to cart, view cart, remove it from cart, verify it is no longer in cart.'
+  }
+}, async ({ page }) => {
   await page.locator('.BookSlideDesktop-Container').first().click();
   await page.getByText('Add to cart').click();
   await page.getByText('View Cart & Checkout').click();
@@ -64,14 +84,18 @@ test('Remove item from cart', async ({ page }) => {
   await expect(page.locator('.ShoppingCartItem')).toHaveCount(0);
 });
 
-test('Create wishlist', async ({ page }) => {
-  await page.goto('/');
+test('Create wishlist', {
+  annotation: {
+    type: 'Summary',
+    description: 'Log in, go to wishlist page, create a wishlist, verify wishlist is created.'
+  }
+}, async ({ page }) => {
   await page.getByText('Log In').click();
 
   await page.locator('#ExistingAccount_EmailAddress').fill('testemail-834hfrn@test.com');
   await page.locator('#ExistingAccount_Password').fill('Test123!');
   await page.locator('[value="Log In"]').click();
-  
+
   await page.locator('.Header-button.Header-wishlist').click();
   await page.getByText('+ Create New List').click();
   const wishlistName = (Math.random() + 1).toString(36).substring(7);
