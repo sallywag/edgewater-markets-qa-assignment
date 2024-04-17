@@ -64,3 +64,20 @@ test('Remove item from cart', async ({ page }) => {
   await expect(page.locator('.ShoppingCartItem')).toHaveCount(0);
 });
 
+test('Create wishlist', async ({ page }) => {
+  await page.goto('/');
+  await page.getByText('Log In').click();
+
+  await page.locator('#ExistingAccount_EmailAddress').fill('testemail-834hfrn@test.com');
+  await page.locator('#ExistingAccount_Password').fill('Test123!');
+  await page.locator('[value="Log In"]').click();
+  
+  await page.locator('.Header-button.Header-wishlist').click();
+  await page.getByText('+ Create New List').click();
+  const wishlistName = (Math.random() + 1).toString(36).substring(7);
+  await page.locator('#listName').fill(wishlistName);
+  await page.getByText('Create List').click();
+
+  await expect(page.locator('.WishList-HeaderName')).toHaveText(wishlistName);
+  await expect(page.locator('.WishList-RootColA')).toContainText(wishlistName);
+});
