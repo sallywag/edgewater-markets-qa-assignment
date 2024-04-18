@@ -50,7 +50,7 @@ test('Added book shows in cart', {
 test('Expected number of items show on search page', {
   annotation: {
     type: 'Summary',
-    description: 'Search a category, change items per page, verify only selected items per page show.'
+    description: 'Search a category, change items per page, verify only selected number of items per page show.'
   }
 }, async ({ page }) => {
   await page.getByPlaceholder('Search 19 million titles by title, author, or ISBN').fill('Health');
