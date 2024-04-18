@@ -14,7 +14,7 @@ export class ThriftBooksBrowsePage {
   }
 
   async goto() {
-    await this.page.goto('/');
+    await this.page.goto('browse');
   }
 
   async sortBy(value: SortByValue) {
