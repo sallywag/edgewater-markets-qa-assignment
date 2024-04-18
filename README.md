@@ -22,6 +22,14 @@ To open the last HTML report:
 
 ``npx playwright show-report``
 
+Test Descriptions
+-----------------
+1. Searching for exact book yields correct first result - Search for a book, verify it's title and author shows in the first results card.
+2. Added book shows in cart - Click first book on the home page, add it to cart, view cart, verify it shows in the cart.
+3. Expected number of items show on search page - Search a category, change items per page, verify only selected number of items per page show.
+4. Remove item from cart - Click first book on the home page, add it to cart, view cart, remove it from cart, verify it is no longer in cart.
+5. Create wishlist - Log in, go to wishlist page, create a wishlist, verify wishlist is created.
+
 Notes
 -----
 1. For demonstration purposes, slowmo and the tracer (viewable in the HTML report) have been enabled, and headless and parallel modes have been disabled.
