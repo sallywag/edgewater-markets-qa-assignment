@@ -13,10 +13,8 @@ test('Searching for exact book yields correct first result', {
   await page.getByPlaceholder('Search 19 million titles by title, author, or ISBN').fill('The Lord of the Rings: The Fellowship of the Ring by J.R.R. Tolkien');
   await page.locator('.Search-submit').click();
 
-  const firstResult = page.locator('.SearchContentResults-tilesContainer div.AllEditionsItem-tile').first();
-
-  await expect(firstResult.locator('.AllEditionsItem-tileTitle')).toHaveText('The Lord of the Rings: The Fellowship of the Ring');
-  await expect(firstResult.locator('[itemprop=author]')).toHaveText('J.R.R. Tolkien');
+  await expect(page.locator('.AllEditionsItem-tileTitle').first()).toHaveText('The Lord of the Rings: The Fellowship of the Ring');
+  await expect(page.locator('[itemprop=author]').first()).toHaveText('J.R.R. Tolkien');
 });
 
 test('Added book shows in cart', {
