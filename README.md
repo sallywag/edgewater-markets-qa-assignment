@@ -37,6 +37,10 @@ Notes
 3. The acceptance criteria were decided for demonstration purposes. In a real project they would be fleshed out and decided with input from the whole team ideally.
 4. Locator strategies would also be standardized in a real project. I decided to use whatever method was most convenient for the assignment.
 
+Updates
+-------
+1. Added page objects and a separate test demonstrating their use.
+
 Contact
 -------
 Salvatore Rosa
